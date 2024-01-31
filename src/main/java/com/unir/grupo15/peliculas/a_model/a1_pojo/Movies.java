@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "pelicula")
+@Table(name = "movies")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -26,6 +26,18 @@ public class Movies {
     private String synopsis;
     @Column(name = "numSeasonsLabel")
     private String numSeasonsLabel;
+
+    @ManyToOne
+    @JoinColumn(name = "id_genero")
+    private Gender gender;
+
+    @ManyToOne
+    @JoinColumn(name = "id_imagen")
+    private Image image;
+
+    @ManyToOne
+    @JoinColumn(name = "id_madurez")
+    private Maturity maturity;
 
     public void update(MoviesDto moviesDto) {
         this.videoId = moviesDto.getVideoId();
