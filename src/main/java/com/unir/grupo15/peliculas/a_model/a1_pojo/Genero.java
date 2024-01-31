@@ -1,4 +1,4 @@
-package com.unir.grupo15.peliculas.model.pojo;
+package com.unir.grupo15.peliculas.a_model.a1_pojo;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,6 +15,6 @@ public class Genero {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private java.lang.String name;
+    //private String name;
 
 }

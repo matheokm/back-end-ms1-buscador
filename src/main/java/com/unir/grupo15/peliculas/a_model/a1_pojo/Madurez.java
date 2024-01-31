@@ -1,4 +1,4 @@
-package com.unir.grupo15.peliculas.model.pojo;
+package com.unir.grupo15.peliculas.a_model.a1_pojo;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,9 +15,5 @@ public class Madurez {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private java.lang.String value;
-    private java.lang.String maturityDescription;
-    private java.lang.String specificRatingReason;
-    private double maturityLevel;
-    //private Peliculas peliculas;
+    //private double maturityLevel;
 }
