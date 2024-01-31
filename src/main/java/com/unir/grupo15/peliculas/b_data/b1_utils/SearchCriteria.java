@@ -1,4 +1,4 @@
-package com.unir.grupo15.peliculas.data.utils;
+package com.unir.grupo15.peliculas.b_data.b1_utils;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -9,7 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SearchCriteria<Peliculas> implements Specification<Peliculas> {
+public class SearchCriteria<Movies> implements Specification<Movies> {
     private final List<SearchStatement> list = new LinkedList<>();
 
     public void add(SearchStatement criteria) {
@@ -17,7 +17,7 @@ public class SearchCriteria<Peliculas> implements Specification<Peliculas> {
     }
 
     @Override
-    public Predicate toPredicate(Root<Peliculas> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+    public Predicate toPredicate(Root<Movies> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
 
         List<Predicate> predicates = new LinkedList<>();
         for (SearchStatement criteria : list) {

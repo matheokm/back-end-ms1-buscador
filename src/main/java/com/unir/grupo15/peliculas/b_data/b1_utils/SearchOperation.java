@@ -1,4 +1,4 @@
-package com.unir.grupo15.peliculas.data.utils;
+package com.unir.grupo15.peliculas.b_data.b1_utils;
 
 public enum SearchOperation {
     GREATER_THAN,

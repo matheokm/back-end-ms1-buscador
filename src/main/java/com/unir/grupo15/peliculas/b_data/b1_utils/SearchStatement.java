@@ -1,4 +1,4 @@
-package com.unir.grupo15.peliculas.data.utils;
+package com.unir.grupo15.peliculas.b_data.b1_utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
