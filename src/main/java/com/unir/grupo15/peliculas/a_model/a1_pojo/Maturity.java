@@ -4,17 +4,20 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "genero")
+@Table(name = "maturity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @ToString
-public class Genero {
+public class Maturity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    //private String name;
+    @Column(name = "maturityLevel")
+    private int maturityLevel;
+    @Column(name = "maturityDescription")
+    private String maturityDescription;
 
 }

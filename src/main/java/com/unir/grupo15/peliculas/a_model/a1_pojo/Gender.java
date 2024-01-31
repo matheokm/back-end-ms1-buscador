@@ -4,16 +4,18 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "madurez")
+@Table(name = "genero")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @ToString
-public class Madurez {
+public class Gender {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    //private double maturityLevel;
+    @Column(name = "nameGender")
+    private String nameGender;
+
 }
