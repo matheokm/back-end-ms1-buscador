@@ -28,15 +28,15 @@ public class Movies {
     private String numSeasonsLabel;
 
     @ManyToOne
-    @JoinColumn(name = "id_genero")
+    @JoinColumn(name = "id_gender")
     private Gender gender;
 
     @ManyToOne
-    @JoinColumn(name = "id_imagen")
+    @JoinColumn(name = "id_image")
     private Image image;
 
     @ManyToOne
-    @JoinColumn(name = "id_madurez")
+    @JoinColumn(name = "id_maturity")
     private Maturity maturity;
 
     public void update(MoviesDto moviesDto) {
