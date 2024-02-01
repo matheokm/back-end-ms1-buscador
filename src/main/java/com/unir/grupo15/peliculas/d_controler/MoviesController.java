@@ -28,10 +28,12 @@ import java.util.Map;
 public class MoviesController {
     private final MoviesService service;
     @GetMapping("/movies")
+
     @Operation(
             operationId = "Obtener peliculas",
             description = "Operacion de lectura",
             summary = "Se devuelve una lista de todos las películas almacenadas en la base de datos.")
+
     @ApiResponse(
             responseCode = "200",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = Movies.class)))
@@ -46,10 +48,8 @@ public class MoviesController {
 
             @Parameter(name = "temporadas", description = "Numero de temporadas", required = false)
             @RequestParam(required = false) String numSeasonLabel) {
-
         log.info("headers: {}", headers);
         List<Movies> movies = service.getMovies(title, synopsis, numSeasonLabel);
-
         if (movies != null) {
             return ResponseEntity.ok(movies);
         } else {
@@ -58,51 +58,139 @@ public class MoviesController {
     }
 
     @GetMapping("/movies/{movieId}")
+
     @Operation(
             operationId = "Obtener información de una película",
             description = "Operacion de lectura",
             summary = "Devuelve información de una película a partir de su identificador.")
+
+    @ApiResponse(
+            responseCode = "200",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Movies.class)))
+
+    @ApiResponse(
+            responseCode = "404",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)),
+            description = "No se ha encontrado la película con el identificador indicado.")
+    public ResponseEntity<Movies> getMovie(@PathVariable String movieId) {
+        log.info("Request received for product {}", movieId);
+        Movies product = service.getMovie(movieId);
+        if (product != null) {
+            return ResponseEntity.ok(product);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/movies/{movieId}")
+
+    @Operation(
+            operationId = "Eliminar una película",
+            description = "Operacion de escritura",
+            summary = "Se elimina una pelicula a partir de su identificador.")
+
+    @ApiResponse(
+            responseCode = "200",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)))
+
+    @ApiResponse(
+            responseCode = "404",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)),
+            description = "No se ha encontrado la película con el identificador indicado.")
+    public ResponseEntity<Void> deleteMovie(@PathVariable String movieId) {
+        Boolean removed = service.removeMovie(movieId);
+        if (Boolean.TRUE.equals(removed)) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/movies")
+
+    @Operation(
+            operationId = "Insertar una película",
+            description = "Operacion de escritura",
+            summary = "Se crea un registro de una película a partir de sus datos.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Datos de la pelicula a crear.",
+                    required = true,
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = MoviesRequest.class))))
+
+    @ApiResponse(
+            responseCode = "201",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Movies.class)))
+
+    @ApiResponse(
+            responseCode = "400",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)),
+            description = "Datos incorrectos introducidos.")
+
+    @ApiResponse(
+            responseCode = "404",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)),
+            description = "No se ha encontrado la película con el identificador indicado.")
+    public ResponseEntity<Movies> addMovie(@RequestBody MoviesRequest request) {
+
+        Movies createdProduct = service.createMovie(request);
+
+        if (createdProduct != null) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PatchMapping("/movies/{movieId}")
+    @Operation(
+            operationId = "Modificar parcialmente una pelicula",
+            description = "RFC 7386. Operacion de escritura",
+            summary = "RFC 7386. Se modifica parcialmente el registro de una pelicula.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Datos de la película a crear.",
+                    required = true,
+                    content = @Content(mediaType = "application/merge-patch+json", schema = @Schema(implementation = String.class))))
+    @ApiResponse(
+            responseCode = "200",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Movies.class)))
+    @ApiResponse(
+            responseCode = "400",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)),
+            description = "Pelicula inválido o datos incorrectos introducidos.")
+    public ResponseEntity<Movies> patchMovie(@PathVariable String movieId, @RequestBody String patchBody) {
+
+        Movies patched = service.updateMovie(movieId, patchBody);
+        if (patched != null) {
+            return ResponseEntity.ok(patched);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/movies/{movieId}")
+    @Operation(
+            operationId = "Modificar totalmente una película",
+            description = "Operacion de escritura",
+            summary = "Se modifica totalmente el registro de una película.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Datos de una película a actualizar.",
+                    required = true,
+                    content = @Content(mediaType = "application/merge-patch+json", schema = @Schema(implementation = MoviesDto.class))))
     @ApiResponse(
             responseCode = "200",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = Movies.class)))
     @ApiResponse(
             responseCode = "404",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)),
-            description = "No se ha encontrado la película con el identificador indicado.")
-    public ResponseEntity<Movies> getMovie(@PathVariable String movieId) {
+            description = "Película no encontrado.")
+    public ResponseEntity<Movies> updateMovie(@PathVariable String movieId, @RequestBody MoviesDto body) {
 
-        log.info("Request received for product {}", movieId);
-        Movies product = service.getMovie(movieId);
-
-        if (product != null) {
-            return ResponseEntity.ok(product);
+        Movies updated = service.updateMovies(movieId, body);
+        if (updated != null) {
+            return ResponseEntity.ok(updated);
         } else {
             return ResponseEntity.notFound().build();
         }
-
     }
 
-    @DeleteMapping("/movies/{movieId}")
-    @Operation(
-            operationId = "Eliminar una película",
-            description = "Operacion de escritura",
-            summary = "Se elimina una pelicula a partir de su identificador.")
-    @ApiResponse(
-            responseCode = "200",
-            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)))
-    @ApiResponse(
-            responseCode = "404",
-            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)),
-            description = "No se ha encontrado la película con el identificador indicado.")
-    public ResponseEntity<Void> deleteMovie(@PathVariable String movieId) {
-
-        Boolean removed = service.removeMovie(movieId);
-
-        if (Boolean.TRUE.equals(removed)) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-
-    }
 }
