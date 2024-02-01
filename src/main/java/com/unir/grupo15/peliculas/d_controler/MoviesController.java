@@ -141,32 +141,6 @@ public class MoviesController {
         }
     }
 
-    @PatchMapping("/movies/{movieId}")
-    @Operation(
-            operationId = "Modificar parcialmente una pelicula",
-            description = "RFC 7386. Operacion de escritura",
-            summary = "RFC 7386. Se modifica parcialmente el registro de una pelicula.",
-            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    description = "Datos de la película a crear.",
-                    required = true,
-                    content = @Content(mediaType = "application/merge-patch+json", schema = @Schema(implementation = String.class))))
-    @ApiResponse(
-            responseCode = "200",
-            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Movies.class)))
-    @ApiResponse(
-            responseCode = "400",
-            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)),
-            description = "Pelicula inválido o datos incorrectos introducidos.")
-    public ResponseEntity<Movies> patchMovie(@PathVariable String movieId, @RequestBody String patchBody) {
-
-        Movies patched = service.updateMovie(movieId, patchBody);
-        if (patched != null) {
-            return ResponseEntity.ok(patched);
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
     @PutMapping("/movies/{movieId}")
     @Operation(
             operationId = "Modificar totalmente una película",
