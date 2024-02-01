@@ -45,5 +45,8 @@ public class Movies {
         this.title = moviesDto.getTitle();
         this.synopsis = moviesDto.getSynopsis();
         this.numSeasonsLabel = moviesDto.getNumSeasonsLabel();
+        this.gender = moviesDto.getGender();
+        this.image = moviesDto.getImage();
+        this.maturity = moviesDto.getMaturity();
     }
 }
