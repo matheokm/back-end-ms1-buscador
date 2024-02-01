@@ -15,9 +15,7 @@ import lombok.*;
 public class Movies {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column(name = "videoId", unique = true)
-    private int videoId;
+    private Long id;
     @Column(name = "releaseYear")
     private int releaseYear;
     @Column(name = "title")
@@ -40,7 +38,6 @@ public class Movies {
     private Maturity maturity;
 
     public void update(MoviesDto moviesDto) {
-        this.videoId = moviesDto.getVideoId();
         this.releaseYear = moviesDto.getReleaseYear();
         this.title = moviesDto.getTitle();
         this.synopsis = moviesDto.getSynopsis();
