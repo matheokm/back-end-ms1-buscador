@@ -1,4 +1,4 @@
-package com.unir.grupo15.peliculas.E_config;
+package com.unir.grupo15.peliculas.e_config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
