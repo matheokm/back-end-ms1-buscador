@@ -21,12 +21,10 @@ import java.util.List;
 public class MoviesServiceImpl implements MoviesService {
     @Autowired
     private MoviesRepository repository;
-
     @Autowired
     private ObjectMapper objectMapper;
-
     @Override
-    public List<Movies> getMovies(String title, String synopsis, String numSeasonLabel) {
+    public List<Movies> getMovies( String title, String synopsis, String numSeasonLabel) {
         if (StringUtils.hasLength(title) || StringUtils.hasLength(synopsis) || StringUtils.hasLength(numSeasonLabel)) {
             return repository.search(title, synopsis, numSeasonLabel);
         }
@@ -38,7 +36,6 @@ public class MoviesServiceImpl implements MoviesService {
     public Movies getMovie(String movieId) {
         return repository.getById(Long.valueOf(movieId));
     }
-
     @Override
     public Boolean removeMovie(String movieId) {
         Movies movie = repository.getById(Long.valueOf(movieId));
@@ -49,7 +46,6 @@ public class MoviesServiceImpl implements MoviesService {
             return Boolean.FALSE;
         }
     }
-
     @Override
     public Movies createMovie(MoviesRequest request) {
         if (request != null && StringUtils.hasLength(request.getTitle().trim())
@@ -62,7 +58,6 @@ public class MoviesServiceImpl implements MoviesService {
         }
         return null;
     }
-
     private Movies buildMovieFromRequest(MoviesRequest request) {
         if (request != null) {
             return Movies.builder()
@@ -77,26 +72,6 @@ public class MoviesServiceImpl implements MoviesService {
         }
         return null;
     }
-
-    @Override
-    public Movies updateMovie(String movieId, String updateRequest) {
-        Movies movies = repository.getById(Long.valueOf(movieId));
-        if (movies != null) {
-            try {
-                JsonMergePatch jsonMergePatch = JsonMergePatch.fromJson(objectMapper.readTree(updateRequest));
-                JsonNode target = jsonMergePatch.apply(objectMapper.readTree(objectMapper.writeValueAsString(movies)));
-                Movies patched = objectMapper.treeToValue(target, Movies.class);
-                repository.save(patched);
-                return patched;
-            } catch (JsonProcessingException | JsonPatchException e) {
-                log.error("Error updating movie {}", movieId, e);
-                return null;
-            }
-        } else {
-            return null;
-        }
-    }
-
     @Override
     public Movies updateMovies(String movieId, MoviesDto updateRequest) {
         Movies movies = repository.getById(Long.valueOf(movieId));
