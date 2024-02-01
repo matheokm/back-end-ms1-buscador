@@ -11,6 +11,5 @@ public interface MoviesService {
     Movies getMovie(String movieId);
     Boolean removeMovie(String movieId);
     Movies createMovie(MoviesRequest request);
-    Movies updateMovie(String movieId, String updateRequest);
     Movies updateMovies(String movieId, MoviesDto updateRequest);
 }
