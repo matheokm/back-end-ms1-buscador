@@ -1,5 +1,8 @@
 package com.unir.grupo15.peliculas.a_model.a2_request;
 
+import com.unir.grupo15.peliculas.a_model.a1_pojo.Gender;
+import com.unir.grupo15.peliculas.a_model.a1_pojo.Image;
+import com.unir.grupo15.peliculas.a_model.a1_pojo.Maturity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,4 +18,7 @@ public class MoviesRequest {
     private String title;
     private String synopsis;
     private String numSeasonsLabel;
+    private Gender gender;
+    private Image image;
+    private Maturity maturity;
 }
