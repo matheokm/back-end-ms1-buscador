@@ -7,9 +7,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.List;
 
 public interface MoviesJpaRepository extends JpaRepository<Movies, Long>, JpaSpecificationExecutor<Movies> {
-    List<Movies> findById(int id);
-    List<Movies> findByVideoId(int videoId);
-    List<Movies> findByReleaseYear(int releaseYear);
     List<Movies> findByTitle(String title);
     List<Movies> findBySynopsis(String synopsis);
     List<Movies> findByNumSeasonsLabel(String numSeasonsLabel);
