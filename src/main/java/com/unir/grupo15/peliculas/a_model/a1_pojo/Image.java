@@ -15,7 +15,7 @@ public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "videoId")
+    @Column(name = "video_id")
     private int videoId;
     @Column(name = "url")
     private String url;
@@ -29,6 +29,6 @@ public class Image {
     private String extension;
     @Column(name = "size")
     private String size;
-    @Column(name = "imageKey")
+    @Column(name = "image_key")
     private String imageKey;
 }
