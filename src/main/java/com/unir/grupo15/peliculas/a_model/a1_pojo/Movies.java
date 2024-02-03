@@ -16,13 +16,13 @@ public class Movies {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "releaseYear")
+    @Column(name = "release_year")
     private int releaseYear;
     @Column(name = "title")
     private String title;
     @Column(name = "synopsis")
     private String synopsis;
-    @Column(name = "numSeasonsLabel")
+    @Column(name = "num_seasons_label")
     private String numSeasonsLabel;
 
     @ManyToOne

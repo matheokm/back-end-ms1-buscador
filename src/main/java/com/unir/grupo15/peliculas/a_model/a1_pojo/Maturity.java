@@ -15,9 +15,9 @@ public class Maturity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "maturityLevel")
+    @Column(name = "maturity_level")
     private int maturityLevel;
-    @Column(name = "maturityDescription")
+    @Column(name = "maturity_description")
     private String maturityDescription;
 
 }
